@@ -32,9 +32,13 @@ def add():
 @app.route("/delete")
 def delete():
   return app.send_static_file("deletevillain.html")
+
+@app.route("/update")
+def update():
+  return app.send_static_file("updatevillain.html")
 ####
 
-#ADD CODE: add /api/villains route here
+## ALL VILLAINS
 @app.route("/api/villains/")
 def get_villains():
   # breakpoint()
@@ -50,7 +54,7 @@ def get_villains():
     })
   return jsonify(data)
 
-
+## ADD VILLAIN
 @app.route("/api/villains/add", methods=["POST"])
 def add_villain():
   errors = []
@@ -82,6 +86,27 @@ def add_villain():
     db.session.commit()
     return jsonify({"status":"success"})
 
+## UPDATE VILLAIN
+@app.route("/api/villains/update", methods=["POST"])
+def update_villain():
+  print("WE MADE IT")
+  print('hit update villain')
+  name = request.form.get("name")
+  villain = Villain.query.filter_by(name=name).first()
+  print(villain.name)
+  if villain:
+    description = request.form.get("description")
+    interests = request.form.get("interests")
+    url = request.form.get("url")
+    villain.description = description
+    villain.interests = interests
+    villain.url = url
+    db.session.commit()
+    return jsonify({"status":"success"})
+  else:
+    return jsonify({"errors": ["Oops! A villain with that name doesn't exist!"]})
+
+## DELETE VILLAIN
 @app.route("/api/villains/delete", methods=["POST"])
 def delete_villain():
   name = request.form.get("name")
@@ -98,7 +123,8 @@ def get_endpoints():
   endpoints = {
     "api/villains/" : "GET - Retrieves all villain data from the database",
     "api/villains/add": "POST - Add a villain to the database",
-    "api/villains/delete": "POST - Delete a villain from the database"
+    "api/villains/delete": "POST - Delete a villain from the database",
+    "api/villains/update": "POST - Update an existing villain"
   }
   return jsonify(endpoints)
 
