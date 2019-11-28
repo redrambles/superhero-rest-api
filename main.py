@@ -106,6 +106,25 @@ def update_villain():
   else:
     return jsonify({"errors": ["Oops! A villain with that name doesn't exist!"]})
 
+
+## SELECT VILLAIN TO UPDATE
+@app.route("/api/villains/select", methods=["POST"])
+def select_villain():
+  print('hit select villain')
+  data = []
+  name = request.form.get("name")
+  villain = Villain.query.filter_by(name=name).first()
+  if villain:
+    data.append({
+      "name": villain.name,
+      "description": villain.description,
+      "interests": villain.interests,
+      "url": villain.url,
+    })
+    return jsonify(data)
+  else:
+    return jsonify({"errors": ["Something went wrong."]})
+
 ## DELETE VILLAIN
 @app.route("/api/villains/delete", methods=["POST"])
 def delete_villain():
