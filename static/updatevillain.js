@@ -22,7 +22,7 @@ function handleChangeSelect() {
 			.find(":selected")
 			.data("choice") != "default"
 	) {
-		// Make Post request for this villain and fill out values for other fields
+		// Make Get request for this villain and fill out values for other fields
 		$.post(
 			"/api/villains/select",
 			{
@@ -36,7 +36,7 @@ function handleChangeSelect() {
 			}
 		);
 	} else {
-		// The 'Choose a Villain' option is selected (data-choice="default"), so we need to empty out the input fields
+		// The 'Choose a Villain' option is selected, so we need to empty out the input fields
 		desc_input.val("");
 		interest_input.val("");
 		image_url_input.val("");

@@ -150,7 +150,7 @@ h4 {
         padding-left: 0px;
 }
 
-input {
+input, select {
     width: 100%;
     margin-bottom: 1.25em;
     height: 2.5em;
