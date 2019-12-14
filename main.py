@@ -1,24 +1,17 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from model import *
+
 
 app = Flask("app")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///villain.db"
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = SQLAlchemy(app)
+# db.create_all()
+# db.session.commit()
 
-class Villain(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    description = db.Column(db.String(120), nullable=False)
-    interests = db.Column(db.String(250), nullable=False)
-    url = db.Column(db.String(250), nullable=False)
-    date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
-    def __repr__(self):
-        return "<Villain "+ self.name + ">"
-
-db.create_all()
-db.session.commit()
+# Get our model up and running
+db.init_app(app)
 
 #### Serving Static Files
 @app.route("/")
@@ -147,4 +140,9 @@ def get_endpoints():
   }
   return jsonify(endpoints)
 
-app.run(host='0.0.0.0', port=8080)
+
+if __name__ == '__main__':
+    app.debug = True
+    app.run()
+    
+# app.run(host='0.0.0.0', port=8080)
