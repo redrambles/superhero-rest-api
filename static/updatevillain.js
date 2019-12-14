@@ -47,6 +47,7 @@ function handleUpdateForm(event) {
 	event.preventDefault();
 	console.log("update handler");
 
+	// Grab the value of all the fields, whether they have been updated or not
 	var name = $("select[name='name']").val();
 	var description = $("input[name='description']").val();
 	var interests = $("input[name='interests']").val();
@@ -67,6 +68,7 @@ function handleUpdateForm(event) {
 					.map(error => `<div class="error">${error}</div>`)
 					.join("");
 			} else {
+				// Redirect to home page
 				window.location = "/";
 			}
 		}
