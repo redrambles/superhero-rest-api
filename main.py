@@ -6,7 +6,6 @@ from model import *
 app = Flask("app")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///villain.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# db = SQLAlchemy(app)
 # db.create_all()
 # db.session.commit()
 
