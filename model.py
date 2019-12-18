@@ -1,8 +1,8 @@
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 db = SQLAlchemy()
+
 
 class Villain(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -13,4 +13,4 @@ class Villain(db.Model):
     date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
-        return "<Villain "+ self.name + ">"
+        return "<Villain " + self.name + ">"
