@@ -2,7 +2,7 @@ $(document).ready(() => {
 	document.getElementById("form").onsubmit = handleDeleteForm;
 });
 
-$.get("/api/villains/", function(data) {
+$.get("/api/villains/", function (data) {
 	for (let i in data) {
 		$("#villain-name").append(`<option>${data[i].name}</option>`);
 	}
@@ -14,13 +14,11 @@ function handleDeleteForm(event) {
 	$.post(
 		"/api/villains/delete",
 		{
-			name: name
+			name: name,
 		},
-		function(data) {
+		function (data) {
 			if (data.errors !== undefined) {
-				document.getElementById("errors").innerHTML = data.errors
-					.map(error => `<div class="error">${error}</div>`)
-					.join("");
+				document.getElementById("errors").innerHTML = data.errors.map((error) => `<div class="error">${error}</div>`).join("");
 			} else {
 				window.location = "/";
 			}

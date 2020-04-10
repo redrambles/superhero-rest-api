@@ -89,18 +89,12 @@ def add_villain():
 ## UPDATE VILLAIN
 @app.route("/api/villains/update", methods=["POST"])
 def update_villain():
-  print("WE MADE IT")
-  print('hit update villain')
   name = request.form.get("name")
   villain = Villain.query.filter_by(name=name).first()
-  print(villain.name)
   if villain:
-    description = request.form.get("description")
-    interests = request.form.get("interests")
-    url = request.form.get("url")
-    villain.description = description
-    villain.interests = interests
-    villain.url = url
+    villain.description = request.form.get("description")
+    villain.interests = request.form.get("interests")
+    villain.url = request.form.get("url")
     db.session.commit()
     return jsonify({"status":"success"})
   else:
@@ -110,7 +104,6 @@ def update_villain():
 ## SELECT VILLAIN TO UPDATE
 @app.route("/api/villains/select", methods=["POST"])
 def select_villain():
-  print('hit select villain')
   data = []
   name = request.form.get("name")
   villain = Villain.query.filter_by(name=name).first()
