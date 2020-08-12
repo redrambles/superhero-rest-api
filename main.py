@@ -7,8 +7,16 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///villain.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 """
-db.create_all()
-db.session.commit()
+# If villain.db is empty, run the two below in Terminal first 
+
+from flask import Flask
+from model import db, Villain
+app = Flask("app")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///villain.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db.init_app(app)
+with app.app_context():
+    db.create_all()
 """
 
 # Get our model up and running
