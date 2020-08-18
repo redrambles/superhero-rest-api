@@ -4,7 +4,7 @@ $(document).ready(() => {
 });
 
 // Populate select element with existing villain names so we can choose one to update
-$.get("/api/villains/", function(data) {
+$.get("/api/villains/", function (data) {
 	for (let i in data) {
 		$("#villain-name").append(`<option>${data[i].name}</option>`);
 	}
@@ -17,18 +17,15 @@ function handleChangeSelect() {
 	var interest_input = $("input[name='interests']");
 	var image_url_input = $("input[name='url']");
 
-	if (
-		$("#villain-name")
-			.find(":selected")
-			.data("choice") != "default"
-	) {
+	// Make sure we've chosen a villain in the dropdown
+	if ($("#villain-name").find(":selected").data("choice") != "default") {
 		// Make Get request for this villain and fill out values for other fields
 		$.post(
 			"/api/villains/select",
 			{
-				name: name
+				name: name,
 			},
-			function(data) {
+			function (data) {
 				// data returns a jsonified dictionnary (object) at position 0 which we use to populate fields
 				desc_input.val(data[0].description);
 				interest_input.val(data[0].interests);
@@ -60,13 +57,11 @@ function handleUpdateForm(event) {
 			description: description,
 			interests: interests,
 			url: url,
-			date_added: new Date()
+			date_added: new Date(),
 		},
-		function(data) {
+		function (data) {
 			if (data.errors !== undefined) {
-				document.getElementById("errors").innerHTML = data.errors
-					.map(error => `<div class="error">${error}</div>`)
-					.join("");
+				document.getElementById("errors").innerHTML = data.errors.map((error) => `<div class="error">${error}</div>`).join("");
 			} else {
 				// Redirect to home page
 				window.location = "/";

@@ -9,6 +9,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 """
 # If villain.db is empty, run the two below in Terminal first 
 
+python
 from flask import Flask
 from model import db, Villain
 app = Flask("app")
@@ -63,6 +64,10 @@ def get_villains():
 
 
 # ADD VILLAIN
+'''
+    Expects 'name'(str), 'description'(str), 'interests'(str), 'url'(str)
+    Returns errors if any exist, otherwise completes addition and redirects to homepage
+'''
 @app.route("/api/villains/add", methods=["POST"])
 def add_villain():
     errors = []
@@ -106,12 +111,9 @@ def update_villain():
     villain = Villain.query.filter_by(name=name).first()
     print(villain.name)
     if villain:
-        description = request.form.get("description")
-        interests = request.form.get("interests")
-        url = request.form.get("url")
-        villain.description = description
-        villain.interests = interests
-        villain.url = url
+        villain.description = request.form.get("description")
+        villain.interests = request.form.get("interests")
+        villain.url = request.form.get("url")
         db.session.commit()
         return jsonify({"status": "success"})
     else:

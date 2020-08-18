@@ -17,13 +17,12 @@ function handleAddForm(event) {
 			description: description,
 			interests: interests,
 			url: url,
-			date_added: new Date()
+			date_added: new Date(),
 		},
-		function(data) {
+		function (data) {
+			console.log("THIS IS DATA " + data);
 			if (data.errors !== undefined) {
-				document.getElementById("errors").innerHTML = data.errors
-					.map(error => `<div class="error">${error}</div>`)
-					.join("");
+				document.getElementById("errors").innerHTML = data.errors.map((error) => `<div class="error">${error}</div>`).join("");
 			} else {
 				window.location = "/";
 			}
