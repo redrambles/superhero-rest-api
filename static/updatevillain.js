@@ -1,14 +1,15 @@
 $(document).ready(() => {
 	document.getElementById("form").onsubmit = handleUpdateForm;
 	document.getElementById("villain-name").onchange = handleChangeSelect;
+	// Populate select element with existing villain names so we can choose one to update
+	$.get("/api/villains/", function (data) {
+		for (let i in data) {
+			$("#villain-name").append(`<option>${data[i].name}</option>`);
+		}
+	});
 });
 
-// Populate select element with existing villain names so we can choose one to update
-$.get("/api/villains/", function (data) {
-	for (let i in data) {
-		$("#villain-name").append(`<option>${data[i].name}</option>`);
-	}
-});
+
 
 function handleChangeSelect() {
 	// If we have chosen a villain name - let's send a get request and populate the fields
@@ -27,9 +28,10 @@ function handleChangeSelect() {
 			},
 			function (data) {
 				// data returns a jsonified dictionnary (object) at position 0 which we use to populate fields
-				desc_input.val(data[0].description);
-				interest_input.val(data[0].interests);
-				image_url_input.val(data[0].url);
+				selectedVillain = data[0]
+				desc_input.val(selectedVillain.description);
+				interest_input.val(selectedVillain.interests);
+				image_url_input.val(selectedVillain.url);
 			}
 		);
 	} else {
